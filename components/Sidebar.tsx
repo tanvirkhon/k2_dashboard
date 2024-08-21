@@ -15,7 +15,7 @@ const Sidebar: React.FC = () => {
   return (
     <div className={`fixed left-0 top-0 h-screen bg-gray-900 text-white transition-all duration-300 ease-in-out ${isCollapsed ? 'w-16' : 'w-64'}`}>
       <div className="flex items-center justify-between p-4">
-        <h1 className={`text-2xl font-bold ${isCollapsed ? 'hidden' : 'block'}`}>TradingBot</h1>
+        <h1 className={`text-2xl font-bold ${isCollapsed ? 'hidden' : 'block'}`}>TradingBot-Dash</h1>
       </div>
       <nav className="mt-8">
         <ul>
