@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "./Sidebar";
 import StatCard from "./StatCard";
 import BotControls from "./BotControls";
 import { Line } from "react-chartjs-2";
@@ -86,7 +85,7 @@ export default function Dashboard() {
   }, []);
 
   if (isLoading || !dashboardData) {
-    return <div className="flex items-center justify-center h-screen text-2xl font-bold text-white">Loading...</div>;
+    return <div className="flex items-center justify-center h-full text-2xl font-bold text-white">Loading...</div>;
   }
 
   const { performance, status, MA_values, profitFactor, sharpeRatio, maxDrawdown } = dashboardData;
@@ -114,71 +113,68 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <Sidebar />
-      <div className="flex-1 p-6 transition-all duration-300">
-        <div className="max-w-7xl mx-auto space-y-6">
-          <h1 className="text-4xl font-bold mb-8 text-center">Trading Bot Overview</h1>
+    <div className="p-6 h-full bg-gray-900 text-white overflow-y-auto">
+      <div className="max-w-7xl mx-auto space-y-6">
+        <h1 className="text-4xl font-bold mb-8 text-center">Trading Bot Overview</h1>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 bg-gray-800 rounded-lg shadow-lg p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-semibold">{timePeriod.charAt(0).toUpperCase() + timePeriod.slice(1)} Performance</h2>
-                <div className="flex space-x-2">
-                  {(["daily", "weekly", "monthly"] as const).map((period) => (
-                    <button
-                      key={period}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition duration-300 ${
-                        timePeriod === period
-                          ? "bg-blue-600 text-white"
-                          : "bg-gray-700 text-gray-300 hover:bg-blue-500 hover:text-white"
-                      }`}
-                      onClick={() => setTimePeriod(period)}>
-                      {period.charAt(0).toUpperCase() + period.slice(1)}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="h-80 bg-gray-700 rounded-lg">
-                <Line data={performanceChartData} options={chartOptions} />
-              </div>
-            </div>
-
-            <div className="bg-gray-800 rounded-lg shadow-lg p-6">
-              <h2 className="text-2xl font-semibold mb-4">Performance Summary</h2>
-              <div className="space-y-4">
-                <StatusItem label="Total Revenue" value={performance.revenue} valueColor="text-green-400" />
-                <StatusItem label="Change" value={performance.change} valueColor={performance.change.startsWith("+") ? "text-green-400" : "text-red-400"} />
-                <StatusItem label="Cumulative ROI" value="3.07%" valueColor="text-blue-400" />
-                <StatusItem label="Current PNL" value="0.10%" valueColor="text-green-400" />
-                <BotControls />
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 bg-gray-800 rounded-lg shadow-lg p-6">
-              <h2 className="text-2xl font-semibold mb-4">Moving Average Chart</h2>
-              <div className="h-80 bg-gray-700 rounded-lg">
-                <Line data={maChartData} options={chartOptions} />
-              </div>
-            </div>
-
-            <div className="bg-gray-800 rounded-lg shadow-lg p-6">
-              <h2 className="text-2xl font-semibold mb-4">Current Bot Status</h2>
-              <div className="grid grid-cols-2 gap-4">
-                {Object.entries(status).map(([key, value]) => (
-                  <StatusItem key={key} label={key.replace(/_/g, " ")} value={value} />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 bg-gray-800 rounded-lg shadow-lg p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-semibold">{timePeriod.charAt(0).toUpperCase() + timePeriod.slice(1)} Performance</h2>
+              <div className="flex space-x-2">
+                {(["daily", "weekly", "monthly"] as const).map((period) => (
+                  <button
+                    key={period}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition duration-300 ${
+                      timePeriod === period
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-700 text-gray-300 hover:bg-blue-500 hover:text-white"
+                    }`}
+                    onClick={() => setTimePeriod(period)}>
+                    {period.charAt(0).toUpperCase() + period.slice(1)}
+                  </button>
                 ))}
               </div>
             </div>
+            <div className="h-80 bg-gray-700 rounded-lg">
+              <Line data={performanceChartData} options={chartOptions} />
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <StatCard title="Profit Factor" value={profitFactor.value} change={profitFactor.change} info={profitFactor.info} />
-            <StatCard title="Sharpe Ratio" value={sharpeRatio.value} change={sharpeRatio.change} info={sharpeRatio.info} />
-            <StatCard title="Max Drawdown" value={maxDrawdown.value} change={maxDrawdown.change} info={maxDrawdown.info} />
+          <div className="bg-gray-800 rounded-lg shadow-lg p-6">
+            <h2 className="text-2xl font-semibold mb-4">Performance Summary</h2>
+            <div className="space-y-4">
+              <StatusItem label="Total Revenue" value={performance.revenue} valueColor="text-green-400" />
+              <StatusItem label="Change" value={performance.change} valueColor={performance.change.startsWith("+") ? "text-green-400" : "text-red-400"} />
+              <StatusItem label="Cumulative ROI" value="3.07%" valueColor="text-blue-400" />
+              <StatusItem label="Current PNL" value="0.10%" valueColor="text-green-400" />
+              <BotControls />
+            </div>
           </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 bg-gray-800 rounded-lg shadow-lg p-6">
+            <h2 className="text-2xl font-semibold mb-4">Moving Average Chart</h2>
+            <div className="h-80 bg-gray-700 rounded-lg">
+              <Line data={maChartData} options={chartOptions} />
+            </div>
+          </div>
+
+          <div className="bg-gray-800 rounded-lg shadow-lg p-6">
+            <h2 className="text-2xl font-semibold mb-4">Current Bot Status</h2>
+            <div className="grid grid-cols-2 gap-4">
+              {Object.entries(status).map(([key, value]) => (
+                <StatusItem key={key} label={key.replace(/_/g, " ")} value={value} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <StatCard title="Profit Factor" value={profitFactor.value} change={profitFactor.change} info={profitFactor.info} />
+          <StatCard title="Sharpe Ratio" value={sharpeRatio.value} change={sharpeRatio.change} info={sharpeRatio.info} />
+          <StatCard title="Max Drawdown" value={maxDrawdown.value} change={maxDrawdown.change} info={maxDrawdown.info} />
         </div>
       </div>
     </div>

@@ -39,40 +39,44 @@ const mockBots: Bot[] = [
 export default function BotManager() {
   return (
     <Layout>
-      <h1 className="text-3xl font-bold mb-6">TradingBot Manager</h1>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        {mockBots.map(bot => (
-          <BotCard key={bot.id} bot={bot} />
-        ))}
-      </div>
+      <div className="p-6 h-full bg-gray-900 text-white overflow-y-auto">
+        <div className="max-w-7xl mx-auto space-y-6">
+          <h1 className="text-4xl font-bold mb-8 text-center">TradingBot Manager</h1>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            {mockBots.map(bot => (
+              <BotCard key={bot.id} bot={bot} />
+            ))}
+          </div>
 
-      <div className="bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
-        <h2 className="text-2xl font-bold mb-4 flex items-center">
-          <FaRobot className="mr-2" />
-          AI Bot Creator
-        </h2>
-        <p className="mb-4">Let AI design your next trading bot based on your requirements.</p>
-        <div className="mb-4">
-          <label htmlFor="botRequirements" className="block mb-2">Describe your ideal trading bot:</label>
-          <textarea 
-            id="botRequirements" 
-            rows={4} 
-            className="w-full bg-gray-700 rounded px-3 py-2"
-            placeholder="E.g., I want a bot that trades Bitcoin using a mean reversion strategy..."
-          ></textarea>
+          <div className="bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+            <h2 className="text-2xl font-bold mb-4 flex items-center">
+              <FaRobot className="mr-2" />
+              AI Bot Creator
+            </h2>
+            <p className="mb-4 text-gray-300">Let AI design your next trading bot based on your requirements.</p>
+            <div className="mb-4">
+              <label htmlFor="botRequirements" className="block mb-2 text-gray-300">Describe your ideal trading bot:</label>
+              <textarea 
+                id="botRequirements" 
+                rows={4} 
+                className="w-full bg-gray-700 rounded px-3 py-2 text-white"
+                placeholder="E.g., I want a bot that trades Bitcoin using a mean reversion strategy..."
+              ></textarea>
+            </div>
+            <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-full text-sm font-medium transition duration-300 flex items-center">
+              <FaBolt className="mr-2" />
+              Generate AI Trading Bot
+            </button>
+          </div>
+
+          <div className="text-center">
+            <button className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-full text-lg font-semibold flex items-center mx-auto transition duration-300">
+              <FaPlusCircle className="mr-2" />
+              Create New Bot Manually
+            </button>
+          </div>
         </div>
-        <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded flex items-center">
-          <FaBolt className="mr-2" />
-          Generate AI Trading Bot
-        </button>
-      </div>
-
-      <div className="text-center">
-        <button className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-full text-lg font-semibold flex items-center mx-auto">
-          <FaPlusCircle className="mr-2" />
-          Create New Bot Manually
-        </button>
       </div>
     </Layout>
   )
@@ -95,13 +99,13 @@ function BotCard({ bot }: { bot: Bot }) {
           </div>
           <p className="text-gray-300 mb-4 text-center">{bot.description}</p>
           <div className="flex justify-center space-x-2">
-            <button className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded">
+            <button className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-full text-sm font-medium transition duration-300">
               Start
             </button>
-            <button className="bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded">
+            <button className="bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded-full text-sm font-medium transition duration-300">
               Edit
             </button>
-            <button className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded">
+            <button className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-full text-sm font-medium transition duration-300">
               Delete
             </button>
           </div>
