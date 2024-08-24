@@ -69,7 +69,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/dashboard-data');
+        const response = await fetch('/api/trading-bot-data');
         const data = await response.json();
         setDashboardData(data);
         setIsLoading(false);
@@ -146,8 +146,8 @@ export default function Dashboard() {
             <div className="space-y-4">
               <StatusItem label="Total Revenue" value={performance.revenue} valueColor="text-green-400" />
               <StatusItem label="Change" value={performance.change} valueColor={performance.change.startsWith("+") ? "text-green-400" : "text-red-400"} />
-              <StatusItem label="Cumulative ROI" value="3.07%" valueColor="text-blue-400" />
-              <StatusItem label="Current PNL" value="0.10%" valueColor="text-green-400" />
+              <StatusItem label="Cumulative ROI" value={status.cumulative_roi || "N/A"} valueColor="text-blue-400" />
+              <StatusItem label="Current PNL" value={status.current_pnl || "N/A"} valueColor="text-green-400" />
               <BotControls />
             </div>
           </div>
